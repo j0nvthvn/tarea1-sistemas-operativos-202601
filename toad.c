@@ -4,18 +4,37 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <syslog.h>
+#include <fcntl.h>
+#include <errno.h>
+
+#define FIFO_PATH "temp/mi-fifo"
 
 static void toad();
 
 int main() {
 	toad();
+	int fd;
+	
+	fd = open(FIFO_PATH, O_RDONLY);
+    if (fd == -1) {
+        syslog(LOG_ERR, "Reader: Open failed");
+    }
 
 	syslog(LOG_NOTICE, "toadd iniciado");
+	
+	while(1) {
+		char buffer[100];
+		if (read(fd, buffer, sizeof(buffer)) == -1) {
+			syslog(LOG_ERR, "Reader: Read failed");
+        	close(fd);
+    	}
 
-	while(1)
-		sleep(1);
+		syslog(LOG_NOTICE, "Reader: Message received");
+				
+	}
 
-	syslog(LOG_NOTICE, "toadd finalizado");
+	// TODO: revisar log al finalizar el proceso
+	// syslog(LOG_NOTICE, "toadd finalizado");
 	closelog();
 	return(EXIT_SUCCESS);
 }
