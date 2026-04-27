@@ -19,4 +19,4 @@ typedef struct
     time_t start_time;
 } Proceso;
 
-#endif // STRUCT_H
+#endif
