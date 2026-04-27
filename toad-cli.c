@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <syslog.h>
 #include <fcntl.h>
+#include <string.h>
 #include "struct.h"
 
 static void comandos(const char *c);
@@ -13,6 +14,28 @@ int main(int argc, char *argv[])
 {
 
     if (argc < 2)
+        comandos(argv[0]);
+
+    if (strcmp(argv[1], "start") == 0 && argc != 3)
+        comandos(argv[0]);
+
+    if ((strcmp(argv[1], "stop") == 0 ||
+         strcmp(argv[1], "status") == 0 ||
+         strcmp(argv[1], "kill") == 0) &&
+        argc != 3)
+        comandos(argv[0]);
+
+    if ((strcmp(argv[1], "ps") == 0 ||
+         strcmp(argv[1], "zombie") == 0) &&
+        argc != 2)
+        comandos(argv[0]);
+
+    if (strcmp(argv[1], "start") != 0 &&
+        strcmp(argv[1], "stop") != 0 &&
+        strcmp(argv[1], "ps") != 0 &&
+        strcmp(argv[1], "status") != 0 &&
+        strcmp(argv[1], "kill") != 0 &&
+        strcmp(argv[1], "zombie") != 0)
         comandos(argv[0]);
 
     Request req;
