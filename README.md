@@ -1,5 +1,13 @@
 # Toadd
 
+## Índice
+
+- [Descripción](#descripción)
+- [Compilación](#compilación)
+- [Uso](#uso)
+- [Arquitectura](#arquitectura)
+- [Estados de procesos](#estados-de-procesos)
+- [Logs](#logs)
 ## Descripción
 
 El sistema consiste en dos programas en C: `toadd` y `toad-cli`.
